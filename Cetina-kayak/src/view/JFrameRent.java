@@ -5,18 +5,46 @@
  */
 package view;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import controll.Controller;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.print.PrinterException;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ivana
  */
-public class JFrameRent extends javax.swing.JFrame {
+public class JFrameRent extends javax.swing.JFrame implements MouseListener{
      JFrameCjenik JFrameCjenik = new JFrameCjenik();
+     JFrameProvjera JFrameProvjera = new JFrameProvjera();
     /**
      * Creates new form JFrameRent
      */
     public JFrameRent() {
         initComponents();
+        rb1.addMouseListener(this);
+        rb2.addMouseListener(this);
+        rb3.addMouseListener(this);
+        
+       
+       Date date = new Date();
+       txtDate.getDayChooser().setMinSelectableDate(date);
     }
+    
+    String brSjedala = "";
+    
+  
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +74,7 @@ public class JFrameRent extends javax.swing.JFrame {
         cb3 = new javax.swing.JCheckBox();
         btnCjenik = new javax.swing.JToggleButton();
         btnIzracun = new javax.swing.JButton();
-        txtUkupno1 = new javax.swing.JTextField();
+        txtUkupno = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         rb1 = new javax.swing.JRadioButton();
@@ -59,6 +87,8 @@ public class JFrameRent extends javax.swing.JFrame {
         txtRacun = new javax.swing.JTextArea();
         jLabel15 = new javax.swing.JLabel();
         txtDate = new com.toedter.calendar.JCalendar();
+        btnProvjera = new javax.swing.JButton();
+        btnPrint = new javax.swing.JButton();
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -210,9 +240,9 @@ public class JFrameRent extends javax.swing.JFrame {
             }
         });
 
-        txtUkupno1.addActionListener(new java.awt.event.ActionListener() {
+        txtUkupno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUkupno1ActionPerformed(evt);
+                txtUkupnoActionPerformed(evt);
             }
         });
 
@@ -284,6 +314,20 @@ public class JFrameRent extends javax.swing.JFrame {
 
         jLabel15.setText("Račun:");
 
+        btnProvjera.setText("Provjera");
+        btnProvjera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProvjeraActionPerformed(evt);
+            }
+        });
+
+        btnPrint.setText("Print");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -295,7 +339,12 @@ public class JFrameRent extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnProvjera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -303,7 +352,7 @@ public class JFrameRent extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtUkupno1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtUkupno, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnIzracun, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -326,7 +375,7 @@ public class JFrameRent extends javax.swing.JFrame {
                         .addComponent(btnIzracun, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtUkupno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUkupno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -335,15 +384,18 @@ public class JFrameRent extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                        .addGap(26, 26, 26))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPrint)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnProvjera)))
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -351,6 +403,7 @@ public class JFrameRent extends javax.swing.JFrame {
 
     private void txtImeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImeActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtImeActionPerformed
 
     private void txtPrezimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrezimeActionPerformed
@@ -377,12 +430,32 @@ public class JFrameRent extends javax.swing.JFrame {
     private void btnIzracunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzracunActionPerformed
         // TODO add your handling code here:
 
+        int ukupno = 0;
+        
+        if(rb1.isSelected()){
+            if(cb1.isSelected()){ ukupno+=70;}
+            else if(cb2.isSelected()){ukupno+=150;}
+            else {ukupno+=210;}
+        }
+        else if (rb2.isSelected())
+        {   if(cb1.isSelected()){ ukupno+=90;}
+            else if(cb2.isSelected()){ukupno+=170;}
+            else {ukupno+=230;}
+        }
+        else if (rb3.isSelected()){
+            if(cb1.isSelected()){ ukupno+=120;}
+            else if(cb2.isSelected()){ukupno+=200;}
+            else {ukupno+=260;}
+        }
+        
+         txtUkupno.setText(Integer.toString(ukupno));
+       // ukupno = Double.parseDouble(txtUkupno.getText());
        
     }//GEN-LAST:event_btnIzracunActionPerformed
 
-    private void txtUkupno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUkupno1ActionPerformed
+    private void txtUkupnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUkupnoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUkupno1ActionPerformed
+    }//GEN-LAST:event_txtUkupnoActionPerformed
 
     private void rb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb2ActionPerformed
         // TODO add your handling code here:
@@ -391,15 +464,43 @@ public class JFrameRent extends javax.swing.JFrame {
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
 
-       
+        grupaSati.clearSelection();
+        grupaVrsta.clearSelection();
+      
+        txtIme.setText(" ");
+        txtPrezime.setText(" ");
+        txtBrMob.setText(" ");
+        txtEmail.setText(" ");
+        txtUkupno.setText(" ");
+        txtRacun.setText(" ");
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentActionPerformed
         // TODO add your handling code here:
 
-        
 
     }//GEN-LAST:event_btnRentActionPerformed
+
+    private void btnProvjeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProvjeraActionPerformed
+        // TODO add your handling code here:
+        JFrameProvjera.setVisible(true);
+    }//GEN-LAST:event_btnProvjeraActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        // TODO add your handling code here:
+        try {
+            Boolean ppt= txtRacun.print();
+            if(ppt){
+                JOptionPane.showMessageDialog(null, "Završeno");
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Došlo je do greške");
+            }
+        } catch (PrinterException ex) {
+            Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     /**
      * @param args the command line arguments
@@ -439,6 +540,8 @@ public class JFrameRent extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCjenik;
     private javax.swing.JButton btnIzracun;
+    private javax.swing.JButton btnPrint;
+    private javax.swing.JButton btnProvjera;
     private javax.swing.JButton btnRent;
     private javax.swing.JToggleButton btnReset;
     private javax.swing.JCheckBox cb1;
@@ -468,10 +571,40 @@ public class JFrameRent extends javax.swing.JFrame {
     private javax.swing.JTextField txtIme;
     private javax.swing.JTextField txtPrezime;
     private javax.swing.JTextArea txtRacun;
-    private javax.swing.JTextField txtUkupno1;
+    private javax.swing.JTextField txtUkupno;
     // End of variables declaration//GEN-END:variables
 
     
+    
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+        if(rb1.isSelected()){ brSjedala="1";}
+       else if (rb2.isSelected()){ brSjedala="2";}
+       else if (rb3.isSelected()){ brSjedala="3";}
+    }
 
+    @Override
+    public void mousePressed(MouseEvent arg0) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent arg0) {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent arg0) {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent arg0) {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+
+    Controller controll = new Controller();
     
 }
