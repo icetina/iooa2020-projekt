@@ -10,36 +10,35 @@ package model;
  * @author Ivana
  */
 public class Racun {
+    String imeKupca;
     String brSjedala;
-    String brSati;
+   
     String datum;
     String cijena;
-    String ukupno;
 
-    public Racun(String brSjedala, String brSati, String datum, String cijena, String ukupno) {
+    public Racun(String imeKupca, String brSjedala, String datum, String cijena) {
+        this.imeKupca = imeKupca;
         this.brSjedala = brSjedala;
-        this.brSati = brSati;
         this.datum = datum;
         this.cijena = cijena;
-        this.ukupno = ukupno;
+    }
+    
+    
+
+    public String getImeKupca() {
+        return imeKupca;
     }
 
-    
-    
+    public void setImeKupca(String imeKupca) {
+        this.imeKupca = imeKupca;
+    }
+
     public String getBrSjedala() {
         return brSjedala;
     }
 
     public void setBrSjedala(String brSjedala) {
         this.brSjedala = brSjedala;
-    }
-
-    public String getBrSati() {
-        return brSati;
-    }
-
-    public void setBrSati(String brSati) {
-        this.brSati = brSati;
     }
 
     public String getDatum() {
@@ -57,15 +56,8 @@ public class Racun {
     public void setCijena(String cijena) {
         this.cijena = cijena;
     }
-
-    public String getUkupno() {
-        return ukupno;
-    }
-
-    public void setUkupno(String ukupno) {
-        this.ukupno = ukupno;
-    }
     
     
     
 }
+

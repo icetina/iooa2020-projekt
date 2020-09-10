@@ -36,15 +36,27 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         rb2.addMouseListener(this);
         rb3.addMouseListener(this);
         
-       
+       connect();
        Date date = new Date();
        txtDate.getDayChooser().setMinSelectableDate(date);
     }
     
     String brSjedala = "";
-    
+     Connection con;
+    PreparedStatement pst;
+    ResultSet rs;
   
-   
+   public void connect()
+    {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/iaoo", "root",""); //ide con = Drive....
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -477,7 +489,46 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
 
     private void btnRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentActionPerformed
         // TODO add your handling code here:
-
+        String imeKupca = txtIme.getText();
+        String brSjedala2= brSjedala;
+        String price = txtUkupno.getText();
+        SimpleDateFormat date_form = new SimpleDateFormat("yyyy-MM-dd");
+        String datum2= date_form.format(txtDate.getDate());
+        
+           // controll.spremiKupca(customer, brSjedala2, price, datum2);
+        
+            try{
+            pst = (PreparedStatement) con.prepareStatement("Select * from book where datum_rezervacije = ? and broj_sjedala = ?"); //ista stvar ko za con
+            pst.setString(1, datum2);
+            pst.setString(2, brSjedala2);
+            rs = pst.executeQuery();
+            
+            if(rs.next()==true){
+            JOptionPane.showMessageDialog(this, "Ova vrsta kayaka je već rezervirana!");
+            }
+          
+            else {
+            pst = (PreparedStatement) con.prepareStatement("insert into book(ime_kupca,broj_sjedala,cijena,datum_rezervacije) values(?,?,?,?)");
+            pst.setString(1, imeKupca);
+            pst.setString(2, brSjedala2);
+            pst.setString(3, price);
+            pst.setString(4,datum2);
+            int k = pst.executeUpdate();
+                if(k==1){
+                     JOptionPane.showMessageDialog(this,"Kayak rezerviran");
+            
+                    txtRacun.setText(controll.Test(imeKupca, brSjedala2, price, datum2));
+                 }
+            
+                else{
+                     JOptionPane.showMessageDialog(this,"Greška!");
+                }
+            }
+            
+            } catch (SQLException ex) {
+            Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
 
     }//GEN-LAST:event_btnRentActionPerformed
 
