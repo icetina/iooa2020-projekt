@@ -32,31 +32,25 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
      */
     public JFrameRent() {
         initComponents();
+        //radio button = broj sjedala
         rb1.addMouseListener(this);
         rb2.addMouseListener(this);
         rb3.addMouseListener(this);
+        //combo box = broj sati
+        cb1.addMouseListener(this);
+        cb2.addMouseListener(this);
+        cb3.addMouseListener(this);
         
-       connect();
+    
        Date date = new Date();
        txtDate.getDayChooser().setMinSelectableDate(date);
     }
     
     String brSjedala = "";
-     Connection con;
+    String sati="";
+    Connection con;
     PreparedStatement pst;
     ResultSet rs;
-  
-   public void connect()
-    {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/iaoo", "root",""); //ide con = Drive....
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,6 +73,7 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         txtPrezime = new javax.swing.JTextField();
         txtBrMob = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
+        txtSifra = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         cb1 = new javax.swing.JCheckBox();
@@ -141,6 +136,12 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             }
         });
 
+        txtSifra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSifraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -166,7 +167,8 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtEmail)
-                            .addComponent(txtBrMob))))
+                            .addComponent(txtBrMob)))
+                    .addComponent(txtSifra, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -190,7 +192,9 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtSifra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -449,22 +453,23 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnIzracun, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtUkupno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnIzracun, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtUkupno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnRent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(jLabel15))
@@ -474,7 +479,7 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
                     .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnProvjera, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                    .addComponent(btnProvjera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -506,26 +511,9 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
     private void btnIzracunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzracunActionPerformed
         // TODO add your handling code here:
 
-        int ukupno = 0;
-        
-        if(rb1.isSelected()){
-            if(cb1.isSelected()){ ukupno+=70;}
-            else if(cb2.isSelected()){ukupno+=150;}
-            else {ukupno+=210;}
-        }
-        else if (rb2.isSelected())
-        {   if(cb1.isSelected()){ ukupno+=90;}
-            else if(cb2.isSelected()){ukupno+=170;}
-            else {ukupno+=230;}
-        }
-        else if (rb3.isSelected()){
-            if(cb1.isSelected()){ ukupno+=120;}
-            else if(cb2.isSelected()){ukupno+=200;}
-            else {ukupno+=260;}
-        }
-        
+        int ukupno = controll.izrSati(sati, brSjedala);
          txtUkupno.setText(Integer.toString(ukupno));
-       // ukupno = Double.parseDouble(txtUkupno.getText());
+       
        
     }//GEN-LAST:event_btnIzracunActionPerformed
 
@@ -553,15 +541,23 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
 
     private void btnRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentActionPerformed
         // TODO add your handling code here:
+        int šifraKupca  = Integer.parseInt(txtSifra.getText());
         String imeKupca = txtIme.getText();
+        String prezimeKupca = txtPrezime.getText();
+        String brMob = txtBrMob.getText();
+        String email = txtEmail.getText();
         String brSjedala2= brSjedala;
+        String sati2 = sati;
         String price = txtUkupno.getText();
         SimpleDateFormat date_form = new SimpleDateFormat("yyyy-MM-dd");
         String datum2= date_form.format(txtDate.getDate());
         
-           // controll.spremiKupca(customer, brSjedala2, price, datum2);
-        
-            try{
+          
+            
+            try {
+            Class.forName("com.mysql.jdbc.Driver");
+     
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/iaoo", "root",""); 
             pst = (PreparedStatement) con.prepareStatement("Select * from book where datum_rezervacije = ? and broj_sjedala = ?"); //ista stvar ko za con
             pst.setString(1, datum2);
             pst.setString(2, brSjedala2);
@@ -572,16 +568,17 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             }
           
             else {
-            pst = (PreparedStatement) con.prepareStatement("insert into book(ime_kupca,broj_sjedala,cijena,datum_rezervacije) values(?,?,?,?)");
-            pst.setString(1, imeKupca);
+            pst = (PreparedStatement) con.prepareStatement("insert into book(šifra_kupca,broj_sjedala,sati,cijena,datum_rezervacije) values(?,?,?,?,?)");
+            pst.setInt(1, šifraKupca);
             pst.setString(2, brSjedala2);
-            pst.setString(3, price);
-            pst.setString(4,datum2);
+             pst.setString(3, sati2);
+            pst.setString(4, price);
+            pst.setString(5,datum2);
             int k = pst.executeUpdate();
                 if(k==1){
                      JOptionPane.showMessageDialog(this,"Kayak rezerviran");
-            
-                    txtRacun.setText(controll.Test(imeKupca, brSjedala2, price, datum2));
+                    controll.spremiKupca(šifraKupca,imeKupca, prezimeKupca, brMob, email);
+                    txtRacun.setText(controll.Test(imeKupca, brSjedala2, sati2, price, datum2));
                  }
             
                 else{
@@ -591,7 +588,9 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             
             } catch (SQLException ex) {
             Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
 
     }//GEN-LAST:event_btnRentActionPerformed
@@ -621,6 +620,10 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         JFrameCjenik.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_btncjenikActionPerformed
+
+    private void txtSifraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSifraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSifraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -695,6 +698,7 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
     private javax.swing.JTextField txtIme;
     private javax.swing.JTextField txtPrezime;
     private javax.swing.JTextArea txtRacun;
+    private javax.swing.JTextField txtSifra;
     private javax.swing.JTextField txtUkupno;
     // End of variables declaration//GEN-END:variables
 
@@ -702,9 +706,14 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
     
     @Override
     public void mouseClicked(MouseEvent arg0) {
-        if(rb1.isSelected()){ brSjedala="1";}
+       if(rb1.isSelected()){ brSjedala="1";}
        else if (rb2.isSelected()){ brSjedala="2";}
        else if (rb3.isSelected()){ brSjedala="3";}
+       
+       if(cb1.isSelected()){ sati="1";}
+       else if (cb2.isSelected()){ sati="3";}
+       else if (cb3.isSelected()){ sati="6";}
+       
     }
 
     @Override
@@ -730,5 +739,4 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
     
 
     Controller controll = new Controller();
-    
 }

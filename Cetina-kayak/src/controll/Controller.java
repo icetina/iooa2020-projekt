@@ -5,6 +5,9 @@
  */
 package controll;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import model.Kupac;
@@ -16,11 +19,11 @@ import model.Racun;
  */
 public class Controller {
     
-    public String Test(String imeKupca, String brSjedala, String datum, String cijena){
-         Racun rac = new Racun(imeKupca, brSjedala, datum,  cijena);
+    public String Test(String imeKupca, String brSjedala, String sati, String datum, String cijena){
+         Racun rac = new Racun(imeKupca, brSjedala, sati, datum,  cijena);
          rac.setImeKupca(imeKupca);
          rac.setBrSjedala(brSjedala);
-         
+         rac.setSati(sati);
          rac.setDatum(datum);
          rac.setCijena(cijena);
          
@@ -34,12 +37,45 @@ public class Controller {
         "*********************************************\n"+"Ime kupca: "+"\t"+ rac.getImeKupca() +"\n"+
         "Prezime kupca: "+"\t"+ rac.getImeKupca() +"\n"+"*********************************************\n"+
         "Kayak za: "+"\t"+ rac.getBrSjedala() +" osobu/e \n"+"Datum rezervacije: "+ rac.getDatum() +"\n"+
-        "*********************************************\n"+"Ukupan iznos: "+"\t"+ rac.getCijena() +" kn\n"+
-        "*********************************************\n";
+        "Vrijeme rezervacije: "+ rac.getSati() +"h \n"+"*********************************************\n"+
+        "Ukupan iznos: "+"\t"+ rac.getCijena() +" kn\n"+"*********************************************\n";
        
         return ispis;
     }
     
+    public int izrSati(String sati, String brSjedala){
+   
+        int ukupno = 0;
+        
+        if(brSjedala == "1"){
+            if(sati=="1"){ukupno+=70;}
+            else if(sati == "3"){ukupno+=150;}
+            else {ukupno+=210;}
+        }
+        else if (brSjedala=="2"){ 
+            if(sati=="1"){ukupno+=90;}
+            else if(sati=="3"){ukupno+=170;}
+            else {ukupno+=230;}
+        }
+        else if (brSjedala=="3"){
+            if(sati=="1"){ukupno+=120;}
+            else if(sati=="3"){ukupno+=200;}
+            else {ukupno+=260;}
+        }
+        
+        return ukupno;
+    }
     
-    
+    public void spremiKupca( int šifraKupca, String imeKupca, String prezimeKupca, String brMob, String email ){
+        
+       Kupac kup = new Kupac (  šifraKupca, imeKupca,  prezimeKupca,  brMob,  email);
+       kup.setŠifraKupca(šifraKupca);
+       kup.setImeKupca(imeKupca);
+        kup.setPrezimeKupca(prezimeKupca);
+        kup.setBrMob(brMob);
+        kup.setEmail(email);
+        SpajanjeDB.spremiKupca(kup);
+    }
+      
+      
 }

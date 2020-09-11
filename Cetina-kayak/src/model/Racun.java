@@ -12,17 +12,18 @@ package model;
 public class Racun {
     String imeKupca;
     String brSjedala;
-   
+    String sati;
     String datum;
     String cijena;
 
-    public Racun(String imeKupca, String brSjedala, String datum, String cijena) {
+    public Racun(String imeKupca, String brSjedala, String sati, String datum, String cijena) {
         this.imeKupca = imeKupca;
         this.brSjedala = brSjedala;
+        this.sati = sati;
         this.datum = datum;
         this.cijena = cijena;
     }
-    
+
     
 
     public String getImeKupca() {
@@ -41,6 +42,14 @@ public class Racun {
         this.brSjedala = brSjedala;
     }
 
+    public String getSati() {
+        return sati;
+    }
+
+    public void setSati(String sati) {
+        this.sati = sati;
+    }
+
     public String getDatum() {
         return datum;
     }
@@ -56,6 +65,7 @@ public class Racun {
     public void setCijena(String cijena) {
         this.cijena = cijena;
     }
+
     
     
     

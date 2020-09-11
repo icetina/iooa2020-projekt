@@ -10,19 +10,30 @@ package model;
  * @author Ivana
  */
 public class Kupac {
+    int šifraKupca;
     String imeKupca;
     String prezimeKupca;
     String brMob;
     String email;
 
-    public Kupac(String imeKupca, String prezimeKupca, String brMob, String email) {
+    public Kupac(int šifraKupca, String imeKupca, String prezimeKupca, String brMob, String email) {
+        this.šifraKupca = šifraKupca;
         this.imeKupca = imeKupca;
         this.prezimeKupca = prezimeKupca;
         this.brMob = brMob;
         this.email = email;
     }
+
     
     
+    public int getŠifraKupca() {
+        return šifraKupca;
+    }
+
+    public void setŠifraKupca(int šifraKupca) {
+        this.šifraKupca = šifraKupca;
+    }
+
     public String getImeKupca() {
         return imeKupca;
     }
@@ -54,9 +65,8 @@ public class Kupac {
     public void setEmail(String email) {
         this.email = email;
     }
-   
+
     
-    
-    
+
     
 }
