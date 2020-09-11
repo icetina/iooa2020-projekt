@@ -10,28 +10,28 @@ package model;
  * @author Ivana
  */
 public class Racun {
-    String imeKupca;
+    int šifraKupca;
     String brSjedala;
     String sati;
     String datum;
     String cijena;
 
-    public Racun(String imeKupca, String brSjedala, String sati, String datum, String cijena) {
-        this.imeKupca = imeKupca;
+    public Racun(int šifraKupca, String brSjedala, String sati, String datum, String cijena) {
+        this.šifraKupca = šifraKupca;
         this.brSjedala = brSjedala;
         this.sati = sati;
         this.datum = datum;
         this.cijena = cijena;
     }
-
+    
     
 
-    public String getImeKupca() {
-        return imeKupca;
+    public int getŠifraKupca() {
+        return šifraKupca;
     }
 
-    public void setImeKupca(String imeKupca) {
-        this.imeKupca = imeKupca;
+    public void setŠifraKupca(int šifraKupca) {
+        this.šifraKupca = šifraKupca;
     }
 
     public String getBrSjedala() {
@@ -66,7 +66,6 @@ public class Racun {
         this.cijena = cijena;
     }
 
-    
     
     
 }

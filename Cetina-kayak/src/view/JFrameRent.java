@@ -553,46 +553,19 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         String datum2= date_form.format(txtDate.getDate());
         
           
-            
-            try {
-            Class.forName("com.mysql.jdbc.Driver");
-     
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/iaoo", "root",""); 
-            pst = (PreparedStatement) con.prepareStatement("Select * from book where datum_rezervacije = ? and broj_sjedala = ?"); //ista stvar ko za con
-            pst.setString(1, datum2);
-            pst.setString(2, brSjedala2);
-            rs = pst.executeQuery();
-            
-            if(rs.next()==true){
-            JOptionPane.showMessageDialog(this, "Ova vrsta kayaka je već rezervirana!");
-            }
-          
-            else {
-            pst = (PreparedStatement) con.prepareStatement("insert into book(šifra_kupca,broj_sjedala,sati,cijena,datum_rezervacije) values(?,?,?,?,?)");
-            pst.setInt(1, šifraKupca);
-            pst.setString(2, brSjedala2);
-             pst.setString(3, sati2);
-            pst.setString(4, price);
-            pst.setString(5,datum2);
-            int k = pst.executeUpdate();
-                if(k==1){
-                     JOptionPane.showMessageDialog(this,"Kayak rezerviran");
-                    controll.spremiKupca(šifraKupca,imeKupca, prezimeKupca, brMob, email);
-                    txtRacun.setText(controll.Test(imeKupca, brSjedala2, sati2, price, datum2));
-                 }
-            
-                else{
-                     JOptionPane.showMessageDialog(this,"Greška!");
-                }
-            }
-            
-            } catch (SQLException ex) {
-            Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-                Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-
+           
+        controll.spremiKupca(šifraKupca,imeKupca, prezimeKupca, brMob, email);
+         try {
+        controll.kreirajRacun(šifraKupca, brSjedala, sati, datum2, price);
+             
+         } catch (SQLException ex) {
+             Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (ClassNotFoundException ex) {
+             Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         txtRacun.setText(controll.Test(šifraKupca, brSjedala2, sati2, price, datum2));
+                 
+         
     }//GEN-LAST:event_btnRentActionPerformed
 
     private void btnProvjeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProvjeraActionPerformed

@@ -8,6 +8,7 @@ package controll;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import model.Kupac;
@@ -19,9 +20,9 @@ import model.Racun;
  */
 public class Controller {
     
-    public String Test(String imeKupca, String brSjedala, String sati, String datum, String cijena){
-         Racun rac = new Racun(imeKupca, brSjedala, sati, datum,  cijena);
-         rac.setImeKupca(imeKupca);
+    public String Test(int šifraKupca, String brSjedala, String sati, String datum, String cijena){
+         Racun rac = new Racun(šifraKupca, brSjedala, sati, datum,  cijena);
+         rac.setŠifraKupca(šifraKupca);
          rac.setBrSjedala(brSjedala);
          rac.setSati(sati);
          rac.setDatum(datum);
@@ -34,8 +35,8 @@ public class Controller {
         
         String ispis="***********RENT    KAYAK*******************\n"+
         "***************RAČUN**********************\n"+"DATUM: "+ danasnjiDat +"\n"+
-        "*********************************************\n"+"Ime kupca: "+"\t"+ rac.getImeKupca() +"\n"+
-        "Prezime kupca: "+"\t"+ rac.getImeKupca() +"\n"+"*********************************************\n"+
+        "*********************************************\n"+"Ime kupca: "+"\t"+rac.getŠifraKupca() +"\n"+
+        "Prezime kupca: "+"\t"+ rac.getŠifraKupca() +"\n"+"*********************************************\n"+
         "Kayak za: "+"\t"+ rac.getBrSjedala() +" osobu/e \n"+"Datum rezervacije: "+ rac.getDatum() +"\n"+
         "Vrijeme rezervacije: "+ rac.getSati() +"h \n"+"*********************************************\n"+
         "Ukupan iznos: "+"\t"+ rac.getCijena() +" kn\n"+"*********************************************\n";
@@ -77,5 +78,14 @@ public class Controller {
         SpajanjeDB.spremiKupca(kup);
     }
       
+    public void kreirajRacun(int šifraKupca, String brSjedala, String sati, String datum, String cijena) throws SQLException, ClassNotFoundException{
+        Racun rac = new Racun(šifraKupca, brSjedala, sati, datum, cijena);
+        rac.setŠifraKupca(šifraKupca);
+        rac.setBrSjedala(brSjedala);
+        rac.setSati(sati);
+        rac.setDatum(datum);
+        rac.setCijena(cijena);
+        SpajanjeDB.kreirajRacun(rac);
+    }
       
 }
