@@ -9,10 +9,17 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Kupac;
 import model.Racun;
+import view.JFrameProvjera;
 import view.JFrameRent;
 
 /**
@@ -22,41 +29,35 @@ import view.JFrameRent;
 public class SpajanjeDB {
     
     
-       public static void spremiKupca(Kupac kup) {
+    public static void spremiKupca(Kupac kup) {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://student.veleri.hr:3306/icetina","icetina","11");
-            PreparedStatement stmt = (PreparedStatement) con.prepareStatement("INSERT INTO kupac ("
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement("INSERT INTO kupac ("
                     + "sifra_kupca,ime_kupca, prezime_kupca, broj_mobitela, email) VALUES"
                     + "(?,?,?,?,?);");
 
-            stmt.setInt(1, kup.getŠifraKupca());
-            stmt.setString(2, kup.getImeKupca());
-            stmt.setString(3, kup.getPrezimeKupca());
-            stmt.setString(4, kup.getBrMob());
-            stmt.setString(5, kup.getEmail());
-
-            stmt.execute();
-            stmt.close();
+            pst.setInt(1, kup.getŠifraKupca());
+            pst.setString(2, kup.getImeKupca());
+            pst.setString(3, kup.getPrezimeKupca());
+            pst.setString(4, kup.getBrMob());
+            pst.setString(5, kup.getEmail());
+            pst.execute();
+            pst.close();
         } catch (Exception ex) {
-            System.out.println("Greška!!!" + ex.toString());
+            System.out.println("Greška!" + ex.toString());
         }
     
     }   
        
-       public static void kreirajRacun(Racun rac) throws SQLException, ClassNotFoundException{
-      
-        Connection con;
-        PreparedStatement pst;
-        ResultSet rs;
-        
+    public static void kreirajRacun(Racun rac) throws SQLException, ClassNotFoundException{
          try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://student.veleri.hr:3306/icetina","icetina","11"); 
-            pst = (PreparedStatement) con.prepareStatement("Select * from rezervacija where datum_rezervacije = ? and broj_sjedala = ?"); //ista stvar ko za con
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://student.veleri.hr:3306/icetina","icetina","11"); 
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement("Select * from rezervacija where datum_rezervacije = ? and broj_sjedala = ?"); //ista stvar ko za con
             pst.setString(1, rac.getDatum());
             pst.setString(2, rac.getBrSjedala());
-            rs = pst.executeQuery();
+            ResultSet rs = pst.executeQuery();
             
             if(rs.next()==true){
                 JOptionPane.showMessageDialog(null, "Ova vrsta kayaka je već rezervirana!");
@@ -78,15 +79,10 @@ public class SpajanjeDB {
                 }
             }
              } catch (Exception ex) {
-            System.out.println("Greška!!!" + ex.toString());
+            System.out.println("Greška!" + ex.toString());
         }
-            }
-            
-            
        
-       
-           
-            
-       
-       
+       }
+    
+    
 }

@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 import model.Kupac;
 import model.Racun;
 
@@ -20,7 +21,13 @@ import model.Racun;
  */
 public class Controller {
     
-    public String Test(int šifraKupca, String brSjedala, String sati, String datum, String cijena){
+    public int generirajSifru(int šifraKupca){
+        Random rand = new Random();
+        int randomInt = rand.nextInt(1000);
+        return randomInt;
+    }
+    
+    public String ispisRacuna(int šifraKupca, String brSjedala, String sati, String datum, String cijena){
          Racun rac = new Racun(šifraKupca, brSjedala, sati, datum,  cijena);
          rac.setŠifraKupca(šifraKupca);
          rac.setBrSjedala(brSjedala);
@@ -33,13 +40,14 @@ public class Controller {
         SimpleDateFormat danasnji = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String danasnjiDat = danasnji.format(new Date());
         
-        String ispis="***********RENT    KAYAK*******************\n"+
-        "***************RAČUN**********************\n"+"DATUM: "+ danasnjiDat +"\n"+
-        "*********************************************\n"+"Ime kupca: "+"\t"+rac.getŠifraKupca() +"\n"+
-        "Prezime kupca: "+"\t"+ rac.getŠifraKupca() +"\n"+"*********************************************\n"+
-        "Kayak za: "+"\t"+ rac.getBrSjedala() +" osobu/e \n"+"Datum rezervacije: "+ rac.getDatum() +"\n"+
-        "Vrijeme rezervacije: "+ rac.getSati() +"h \n"+"*********************************************\n"+
-        "Ukupan iznos: "+"\t"+ rac.getCijena() +" kn\n"+"*********************************************\n";
+        String ispis="*********************RENT KAYAK************************\n"+
+        "*******************OCEAN VENTURES*******************\n"+
+        "************************RACUN**************************\n"+"DATUM: "+ danasnjiDat +"\n"+
+        "*********************************************************\n"+"ŠIFRA KUPCA: "+" "+rac.getŠifraKupca()
+        +"\n"+"*********************************************************\n"+
+        "KAYAK ZA: "+"\t"+ rac.getBrSjedala() +" OSOBU/E \n"+"DATUM REZERVACIJE: "+ rac.getCijena() +"\n"+
+        "VRIJEME TRAJANJA REZERVACIJE: "+ rac.getSati() +"h \n"+"**********************************************************\n"+
+        "UKUPAN IZNOS: "+" "+ rac.getDatum() +" KN\n"+"**********************************************************\n";
        
         return ispis;
     }
@@ -63,7 +71,6 @@ public class Controller {
             else if(sati=="3"){ukupno+=200;}
             else {ukupno+=260;}
         }
-        
         return ukupno;
     }
     
@@ -72,10 +79,10 @@ public class Controller {
        Kupac kup = new Kupac (  šifraKupca, imeKupca,  prezimeKupca,  brMob,  email);
        kup.setŠifraKupca(šifraKupca);
        kup.setImeKupca(imeKupca);
-        kup.setPrezimeKupca(prezimeKupca);
-        kup.setBrMob(brMob);
-        kup.setEmail(email);
-        SpajanjeDB.spremiKupca(kup);
+       kup.setPrezimeKupca(prezimeKupca);
+       kup.setBrMob(brMob);
+       kup.setEmail(email);
+       SpajanjeDB.spremiKupca(kup);
     }
       
     public void kreirajRacun(int šifraKupca, String brSjedala, String sati, String datum, String cijena) throws SQLException, ClassNotFoundException{

@@ -41,17 +41,13 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         cb2.addMouseListener(this);
         cb3.addMouseListener(this);
         
-    
-       Date date = new Date();
-       txtDate.getDayChooser().setMinSelectableDate(date);
+        Date date = new Date();
+        txtDate.getDayChooser().setMinSelectableDate(date);
     }
-    
-    String brSjedala = "";
-    String sati="";
-    Connection con;
-    PreparedStatement pst;
-    ResultSet rs;
-
+        String brSjedala ="";
+        String sati="";
+        int šifraKupca;
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,6 +70,7 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         txtBrMob = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtSifra = new javax.swing.JTextField();
+        btnGeneriraj = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         cb1 = new javax.swing.JCheckBox();
@@ -136,9 +133,18 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             }
         });
 
+        txtSifra.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 1, 14)); // NOI18N
         txtSifra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSifraActionPerformed(evt);
+            }
+        });
+
+        btnGeneriraj.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 12)); // NOI18N
+        btnGeneriraj.setText("GENERIRAJ SVOJU ŠIFRU");
+        btnGeneriraj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerirajActionPerformed(evt);
             }
         });
 
@@ -149,26 +155,25 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPrezime)
-                            .addComponent(txtIme)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(0, 31, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(14, 14, 14)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtEmail)
-                            .addComponent(txtBrMob)))
-                    .addComponent(txtSifra, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(txtBrMob)
+                            .addComponent(txtIme)
+                            .addComponent(txtPrezime)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnGeneriraj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSifra, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -193,8 +198,10 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
                     .addComponent(jLabel4)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtSifra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSifra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGeneriraj))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -261,7 +268,7 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             }
         });
 
-        txtUkupno.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtUkupno.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 1, 14)); // NOI18N
         txtUkupno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUkupnoActionPerformed(evt);
@@ -297,10 +304,15 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rb3)
-                    .addComponent(rb2)
-                    .addComponent(rb1)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel10)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(rb2)
+                            .addComponent(rb3)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(rb1)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -308,13 +320,13 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rb1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(rb2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(rb3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         btnReset.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 18)); // NOI18N
@@ -334,6 +346,7 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         });
 
         txtRacun.setColumns(20);
+        txtRacun.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 11)); // NOI18N
         txtRacun.setRows(5);
         jScrollPane2.setViewportView(txtRacun);
 
@@ -453,34 +466,35 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnIzracun, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(txtUkupno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnRent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnIzracun, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtUkupno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnProvjera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnPrint, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -510,10 +524,9 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
 
     private void btnIzracunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzracunActionPerformed
         // TODO add your handling code here:
-
+        
         int ukupno = controll.izrSati(sati, brSjedala);
-         txtUkupno.setText(Integer.toString(ukupno));
-       
+        txtUkupno.setText(Integer.toString(ukupno));
        
     }//GEN-LAST:event_btnIzracunActionPerformed
 
@@ -527,7 +540,6 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
-
         grupaSati.clearSelection();
         grupaVrsta.clearSelection();
       
@@ -535,13 +547,15 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         txtPrezime.setText(" ");
         txtBrMob.setText(" ");
         txtEmail.setText(" ");
+        txtSifra.setText(" ");
         txtUkupno.setText(" ");
         txtRacun.setText(" ");
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentActionPerformed
         // TODO add your handling code here:
-        int šifraKupca  = Integer.parseInt(txtSifra.getText());
+        
+        šifraKupca  = Integer.parseInt(txtSifra.getText());
         String imeKupca = txtIme.getText();
         String prezimeKupca = txtPrezime.getText();
         String brMob = txtBrMob.getText();
@@ -549,21 +563,21 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         String brSjedala2= brSjedala;
         String sati2 = sati;
         String price = txtUkupno.getText();
+        
         SimpleDateFormat date_form = new SimpleDateFormat("yyyy-MM-dd");
         String datum2= date_form.format(txtDate.getDate());
         
-          
-           
-        controll.spremiKupca(šifraKupca,imeKupca, prezimeKupca, brMob, email);
+      
          try {
-        controll.kreirajRacun(šifraKupca, brSjedala, sati, datum2, price);
-             
+            controll.spremiKupca(šifraKupca,imeKupca, prezimeKupca, brMob, email);
+            controll.kreirajRacun(šifraKupca, brSjedala2, sati, datum2, price);
+            txtRacun.setText(controll.ispisRacuna(šifraKupca, brSjedala2, sati2, price, datum2));
          } catch (SQLException ex) {
              Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
          } catch (ClassNotFoundException ex) {
              Logger.getLogger(JFrameRent.class.getName()).log(Level.SEVERE, null, ex);
          }
-         txtRacun.setText(controll.Test(šifraKupca, brSjedala2, sati2, price, datum2));
+         
                  
          
     }//GEN-LAST:event_btnRentActionPerformed
@@ -597,6 +611,14 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
     private void txtSifraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSifraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSifraActionPerformed
+
+    private void btnGenerirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerirajActionPerformed
+        // TODO add your handling code here:
+        
+        
+        int generiraj  = controll.generirajSifru(šifraKupca);
+        txtSifra.setText(Integer.toString(generiraj));
+    }//GEN-LAST:event_btnGenerirajActionPerformed
 
     /**
      * @param args the command line arguments
@@ -634,6 +656,7 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGeneriraj;
     private javax.swing.JButton btnIzracun;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnProvjera;
@@ -686,7 +709,6 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
        if(cb1.isSelected()){ sati="1";}
        else if (cb2.isSelected()){ sati="3";}
        else if (cb3.isSelected()){ sati="6";}
-       
     }
 
     @Override
@@ -708,8 +730,6 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
     public void mouseExited(MouseEvent arg0) {
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
 
     Controller controll = new Controller();
 }
