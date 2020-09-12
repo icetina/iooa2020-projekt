@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import model.Kupac;
 import model.Racun;
@@ -40,14 +41,17 @@ public class Controller {
         SimpleDateFormat danasnji = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String danasnjiDat = danasnji.format(new Date());
         
-        String ispis="*********************RENT KAYAK************************\n"+
-        "*******************OCEAN VENTURES*******************\n"+
-        "************************RACUN**************************\n"+"DATUM: "+ danasnjiDat +"\n"+
-        "*********************************************************\n"+"ŠIFRA KUPCA: "+" "+rac.getŠifraKupca()
-        +"\n"+"*********************************************************\n"+
-        "KAYAK ZA: "+"\t"+ rac.getBrSjedala() +" OSOBU/E \n"+"DATUM REZERVACIJE: "+ rac.getCijena() +"\n"+
-        "VRIJEME TRAJANJA REZERVACIJE: "+ rac.getSati() +"h \n"+"**********************************************************\n"+
-        "UKUPAN IZNOS: "+" "+ rac.getDatum() +" KN\n"+"**********************************************************\n";
+        String ispis="*********************RENT KAYAK*******************\n"+"\n"+
+        "*******************OCEAN VENTURES**************\n"+"\n"+
+        "************************RACUN*********************\n"+"\n**************"
+        + "**************************************\n"+"DATUM: \t\t"+ danasnjiDat +"\n"+
+        "****************************************************\n"+"ŠIFRA KUPCA: \t\t\t"+" "+rac.getŠifraKupca()
+        +"\n"+"****************************************************\n"+
+        "KAYAK ZA:               "+"\t"+ rac.getBrSjedala() +" OSOBU/E \n"+"DATUM REZERVACIJE:               \t"+ 
+        rac.getCijena() +"\n"+ "VRIJEME TRAJANJA REZERVACIJE:\t    "+ rac.getSati() +"h \n"+
+        "*****************************************************\n"+"UKUPAN IZNOS:    \t\t"+" "+ 
+        rac.getDatum() +" KN\n"+"*****************************************************\n"+"\n"+
+        "**************HVALA I DOVIDENJA*******************\n";
        
         return ispis;
     }
@@ -84,7 +88,16 @@ public class Controller {
        kup.setEmail(email);
        SpajanjeDB.spremiKupca(kup);
     }
-      
+    
+    public List dohvatiKupca(){
+        return SpajanjeDB.dohvatiKupca();
+    }
+    
+    public static boolean provjeriKupca( int šifraKupca, String imeKupca, String prezimeKupca, String brojMobitela, String email){
+        return SpajanjeDB.provjeriKupca(šifraKupca, imeKupca, prezimeKupca, brojMobitela, email);
+    }
+    
+    
     public void kreirajRacun(int šifraKupca, String brSjedala, String sati, String datum, String cijena) throws SQLException, ClassNotFoundException{
         Racun rac = new Racun(šifraKupca, brSjedala, sati, datum, cijena);
         rac.setŠifraKupca(šifraKupca);
@@ -94,5 +107,6 @@ public class Controller {
         rac.setCijena(cijena);
         SpajanjeDB.kreirajRacun(rac);
     }
+
       
 }
