@@ -27,7 +27,7 @@
                   <Group type="102" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txtDate" pref="147" max="32767" attributes="0"/>
+                      <Component id="txtDate" pref="225" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnProvjeri" min="-2" pref="112" max="-2" attributes="0"/>
                   </Group>
@@ -95,7 +95,7 @@
                 <Column editable="true" title="&#x160;IFRA KUPCA" type="java.lang.Object"/>
                 <Column editable="true" title="BR. SJEDALA" type="java.lang.Object"/>
                 <Column editable="true" title="BR. SATI" type="java.lang.Object"/>
-                <Column editable="true" title="DATUM REZERVACIJE" type="java.lang.Object"/>
+                <Column editable="true" title="DATUM REZ." type="java.lang.Object"/>
                 <Column editable="true" title="CIJENA" type="java.lang.Object"/>
               </Table>
             </Property>

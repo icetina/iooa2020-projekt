@@ -71,7 +71,7 @@ public class JFrameProvjera extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ŠIFRA KUPCA", "BR. SJEDALA", "BR. SATI", "DATUM REZERVACIJE", "CIJENA"
+                "ŠIFRA KUPCA", "BR. SJEDALA", "BR. SATI", "DATUM REZ.", "CIJENA"
             }
         ));
         tabRezervacije.setSelectionForeground(new java.awt.Color(255, 233, 0));
@@ -123,7 +123,7 @@ public class JFrameProvjera extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                        .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnProvjeri, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
