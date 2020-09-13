@@ -99,7 +99,7 @@ public class JFramePocetna extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 204, 0));
+        jPanel2.setBackground(new java.awt.Color(255, 233, 0));
 
         jLabel4.setFont(new java.awt.Font("Bodoni MT Black", 0, 36)); // NOI18N
         jLabel4.setText("OCEAN VENTURES");

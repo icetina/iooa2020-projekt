@@ -65,7 +65,7 @@ public class JFrameProvjera extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 0, 14)); // NOI18N
         jLabel1.setText("Odaberi datum:");
 
-        tabRezervacije.setBackground(new java.awt.Color(255, 204, 0));
+        tabRezervacije.setBackground(new java.awt.Color(255, 233, 0));
         tabRezervacije.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -74,10 +74,10 @@ public class JFrameProvjera extends javax.swing.JFrame {
                 "ŠIFRA KUPCA", "BR. SJEDALA", "BR. SATI", "DATUM REZERVACIJE", "CIJENA"
             }
         ));
-        tabRezervacije.setSelectionForeground(new java.awt.Color(255, 204, 0));
+        tabRezervacije.setSelectionForeground(new java.awt.Color(255, 233, 0));
         jScrollPane1.setViewportView(tabRezervacije);
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 233, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel6.setBackground(new java.awt.Color(0, 0, 0));

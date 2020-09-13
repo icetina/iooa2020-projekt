@@ -258,8 +258,8 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
         jLabel15.setFont(new java.awt.Font("Microsoft YaHei", 0, 12)); // NOI18N
         jLabel15.setText("Račun:");
 
-        txtDate.setBackground(new java.awt.Color(255, 204, 0));
-        txtDate.setDecorationBackgroundColor(new java.awt.Color(255, 204, 0));
+        txtDate.setBackground(new java.awt.Color(255, 233, 0));
+        txtDate.setDecorationBackgroundColor(new java.awt.Color(255, 233, 0));
 
         btnPrint.setFont(new java.awt.Font("Microsoft YaHei UI Light", 0, 18)); // NOI18N
         btnPrint.setText("ISPRINTAJ RAČUN");
@@ -269,7 +269,7 @@ public class JFrameRent extends javax.swing.JFrame implements MouseListener{
             }
         });
 
-        jPanel5.setBackground(new java.awt.Color(255, 204, 0));
+        jPanel5.setBackground(new java.awt.Color(255, 233, 0));
 
         jLabel5.setFont(new java.awt.Font("Bodoni MT Black", 0, 36)); // NOI18N
         jLabel5.setText("OCEAN VENTURES");

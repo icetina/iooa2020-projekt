@@ -63,7 +63,7 @@ public class JFrameCjenik extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("OCEAN VENTURES");
 
-        jPanel1.setBackground(new java.awt.Color(255, 231, 135));
+        jPanel1.setBackground(new java.awt.Color(255, 244, 130));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel2.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 1, 16)); // NOI18N
@@ -127,7 +127,7 @@ public class JFrameCjenik extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 223, 84));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 73));
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel12.setFont(new java.awt.Font("Microsoft JhengHei Light", 1, 16)); // NOI18N
@@ -190,7 +190,7 @@ public class JFrameCjenik extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(255, 214, 38));
+        jPanel4.setBackground(new java.awt.Color(255, 234, 49));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel13.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 16)); // NOI18N
