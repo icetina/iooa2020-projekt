@@ -5,8 +5,7 @@
  */
 package view;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+
 import controll.Controller;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

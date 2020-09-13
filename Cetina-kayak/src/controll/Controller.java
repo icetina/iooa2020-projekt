@@ -5,9 +5,7 @@
  */
 package controll;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import java.sql.DriverManager;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,7 +47,7 @@ public class Controller {
         +"\n"+"****************************************************\n"+
         "KAYAK ZA:               "+"\t"+ rac.getBrSjedala() +" OSOBU/E \n"+"DATUM REZERVACIJE:               \t"+ 
         rac.getCijena() +"\n"+ "VRIJEME TRAJANJA REZERVACIJE:\t    "+ rac.getSati() +"h \n"+
-        "*****************************************************\n"+"UKUPAN IZNOS:           \t"+" "+ 
+        "*****************************************************\n"+"UKUPAN IZNOS:                         \t"+" "+ 
         rac.getDatum() +" KN\n"+"*****************************************************\n"+"\n"+
         "**************HVALA I DOVIDENJA*******************\n";
        
