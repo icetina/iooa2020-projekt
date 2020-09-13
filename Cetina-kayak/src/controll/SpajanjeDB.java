@@ -41,7 +41,7 @@ public class SpajanjeDB {
             pst.execute();
             pst.close();
         } catch (Exception ex) {
-         //   System.out.println("Greška!" + ex.toString());
+            System.out.println("Greška!" + ex.toString());
           JOptionPane.showMessageDialog(null, "Ova šifra kupca već postoji!");
         }
     
